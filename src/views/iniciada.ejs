@@ -1,0 +1,80 @@
+<%- include('includes/head'); %>
+<%- include('includes/nav'); %>
+<div class="container d-flex flex-column justify-content-center">
+    <% if (prova.tipoDeProva === 'ENEM') { %>
+        <h1 class="display-1 text-center">Prova <%=prova.tipoDeProva%> <%= prova.ano%> Dia <%= prova.dia%></h1>  
+    <% } else { %> 
+        <h1 class="display-1 text-center">Prova <%=prova.tipoDeProva%> <%= prova.ano%></h1>  
+    <% } %> 
+    <h2 class="display-1 text-center"><%= timer %> </h2>
+</div>
+<form class="container"action="/correcao" method="POST">
+    <input type="hidden" name="_csrf" value=<%= csrfToken%>>
+    <div class="row d-flex justify-content-around"">
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = 1; i <= (prova.numQuestoes / 3); i++) {%> 
+                <div class="row" ><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="<%=i%>">
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = (prova.numQuestoes / 3) + 1; i <= (prova.numQuestoes / 3 * 2); i++) {%> 
+                <div class="row"><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="<%=i%>">
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = (prova.numQuestoes / 3 * 2) + 1; i <= prova.numQuestoes; i++) {%> 
+                <div class="row"><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="<%=i%>">
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+        <button type="submit" class="btn btn-info mt-3">Finalizar Avaliação</button>
+    </div>
+
+</form>
+
+<script>
+    let respostas = {};
+    const inputs = document.querySelectorAll('.form-check-input');
+    document.addEventListener('click', (e)=>{
+        const element = e.target;
+        if(element.classList.contains('form-check-input')) {
+            respostas[element.name] = element.nextSibling.nextSibling.innerHTML;
+            const respostasJson = JSON.stringify(respostas);
+            localStorage.setItem('respostas', respostasJson);
+        };
+    });
+    document.addEventListener('DOMContentLoaded', (e)=>{
+        if(!localStorage.getItem('respostas')) return;
+        respostas = JSON.parse(localStorage.getItem('respostas'));
+        const questoesRespondidas = Object.keys(respostas);
+        questoesRespondidas.forEach(key => {
+            const options = document.getElementsByName(key);
+            options.forEach(val => {
+                if(respostas[key] === val.nextSibling.nextSibling.innerHTML) val.checked = true;
+            });
+        });
+    });
+   
+</script>
+
+<%- include('includes/footer'); %>

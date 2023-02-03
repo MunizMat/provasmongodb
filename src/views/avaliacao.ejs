@@ -1,0 +1,59 @@
+<%- include('includes/head'); %>
+<%- include('includes/nav'); %>
+<div class="container d-flex flex-column justify-content-center">
+    <% if (prova.tipoDeProva === 'ENEM') { %>
+        <h1 class="display-1 text-center">Prova <%=prova.tipoDeProva%> <%= prova.ano%> Dia <%= prova.dia%></h1>  
+    <% } else { %> 
+        <h1 class="display-1 text-center">Prova <%=prova.tipoDeProva%> <%= prova.ano%></h1>  
+    <% } %> 
+    <h2 class="display-1 text-center"><%= timer %> </h2>
+    <form class="container d-flex flex-column justify-content-center"action="/avaliacao/iniciada" method="post">
+        <input type="hidden" name="_csrf" value=<%= csrfToken%>>
+        <input type="hidden" name="nomeProva" value="<%=prova.nome%>">
+        <button type="submit" class="btn btn-info">Iniciar Avaliação</button>
+      </form>
+</div>
+<form class="container"action="/ano" method="POST">
+    <input type="hidden" name="_csrf" value=<%= csrfToken%>>
+    <div class="row d-flex justify-content-around"">
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = 1; i <= (prova.numQuestoes / 3); i++) {%> 
+                <div class="row" ><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="Q<%=i%>" disabled>
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = (prova.numQuestoes / 3) + 1; i <= (prova.numQuestoes / 3 * 2); i++) {%> 
+                <div class="row"><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="Q<%=i%>" disabled>
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+        <div class="col-lg-3 my-3 mx-3 ps-4 rounded-1 bg-info">
+            <% for(let i = (prova.numQuestoes / 3 * 2) + 1; i <= prova.numQuestoes; i++) {%> 
+                <div class="row"><%=i%>)
+                    <% prova.opcoes.forEach((val) => { %> 
+                        <div class="form-check col">
+                            <input class="form-check-input" type="radio" name="Q<%=i%>" disabled>
+                            <label class="form-check-label"><%=val%></label>
+                        </div>
+                    <% }); %> 
+                </div>
+            <% }; %> 
+        </div>
+    </div>
+
+</form>
+
+<%- include('includes/footer'); %>

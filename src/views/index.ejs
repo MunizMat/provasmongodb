@@ -1,0 +1,27 @@
+<%- include('includes/head'); %>
+<%- include('includes/nav'); %>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 my-3">
+            <h1 class="display-1 text-center">Simulados Online</h1>
+            <p class="text-center lead">Preencha os dados abaixo para encontramos sua prova:</p>
+            <form action="/ano" method="POST">
+                <input type="hidden" name="_csrf" value=<%= csrfToken%>>
+                <div class="form-group">
+                    <label for="prova-select">Selecione uma prova:</label>
+                    <select class="form-control" name="prova"id="prova-select" onchange="">
+                        <option value=""></option>
+                        <option value="ENEM">ENEM</option>
+                        <option value="FUVEST">FUVEST</option>
+                        <option value="UNICAMP">UNICAMP</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+              </form>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+
+<%- include('includes/footer'); %>
