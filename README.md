@@ -1,5 +1,14 @@
 # provasmongodb
-Este projeto consiste em uma "mini" plataforma para realizar provas e simulados. Fiz o projeto com a intenção de colocar em prática os meus aprendizados de Javascript. Para a construção do projeto eu utilizei o Javascript, EJS, NodeJS, MongoDB e Express. O projeto não foi concluído pois eu optei por refazê-lo com o React.
+
+<p>Este projeto consiste em uma plataforma para realizar provas e simulados. Foi uma aplicação pessoal de conceitos aprendidos em aula. A intenção do projeto não foi focar no design/front-end, mas sim no back-end, aprendendo a lidar com <strong>manutenção de rotas e base de dados</strong>. </p>
+
+<p>Ferramentas utilizadas </p>
+<ul>
+  <li>NodeJS</li>
+  <li>Express</li>
+  <li>MongoDB</li>
+</ul>
+
 
 <img width="725" alt="Captura de Tela 2023-02-03 às 17 11 16" src="https://user-images.githubusercontent.com/103901768/216701826-6ec8e414-7741-4aa1-b89e-64aa525e9f3e.png">
 
